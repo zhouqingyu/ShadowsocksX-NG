@@ -19,10 +19,10 @@ class PreferencesWinController: NSWindowController {
         super.windowDidLoad()
 
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-        toolbar.selectedItemIdentifier = "general"
+        toolbar.selectedItemIdentifier = NSToolbarItem.Identifier(rawValue: "general")
     }
     
-    func windowWillClose(_ notification: Notification) {
+    @objc func windowWillClose(_ notification: Notification) {
         NotificationCenter.default
             .post(name: NOTIFY_CONF_CHANGED, object: nil)
     }
@@ -30,5 +30,10 @@ class PreferencesWinController: NSWindowController {
     @IBAction func toolbarAction(sender: NSToolbarItem) {
         tabView.selectTabViewItem(withIdentifier: sender.itemIdentifier)
     }
-    
+
+    @IBAction func resetProxyExceptions(sender: NSButton) {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "ProxyExceptions")
+    }
+
 }
